@@ -1,0 +1,54 @@
+ 
+****************************************
+Report : power
+        -analysis_effort low
+Design : mac_engine
+Version: U-2022.12
+Date   : Wed Feb 28 13:35:30 2024
+****************************************
+
+
+Library(s) Used:
+
+    GF22FDX_SC7P5T_116CPP_BASE_CSC20L_TT_0P80V_0P00V_0P00V_0P00V_25C (File: /cad/tools/libraries/dwc_logic_in_gf22fdx_sc7p5t_116cpp_base_csc20l/GF22FDX_SC7P5T_116CPP_BASE_CSC20L_FDK_RELV02R80/model/timing/db/GF22FDX_SC7P5T_116CPP_BASE_CSC20L_TT_0P80V_0P00V_0P00V_0P00V_25C.db)
+
+
+Operating Conditions: TT_0P80V_0P00V_0P00V_0P00V_25C   Library: GF22FDX_SC7P5T_116CPP_BASE_CSC20L_TT_0P80V_0P00V_0P00V_0P00V_25C
+Wire Load Model Mode: top
+
+
+Global Operating Voltage = 0.8  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ps
+    Dynamic Power Units = 1mW    (derived from V,C,T units)
+    Leakage Power Units = 1uW
+
+
+Attributes
+----------
+i - Including register clock pin internal power
+
+
+  Cell Internal Power  =   7.3601 uW   (15%)
+  Net Switching Power  =  41.6865 uW   (85%)
+                         ---------
+Total Dynamic Power    =  49.0465 uW  (100%)
+
+Cell Leakage Power     = 711.5458 nW
+
+
+                 Internal         Switching           Leakage            Total
+Power Group      Power            Power               Power              Power   (   %    )  Attrs
+--------------------------------------------------------------------------------------------------
+io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
+black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
+clock_network  3.2017e-03            0.0000            0.0000        3.2017e-03  (   6.43%)  i
+register       4.4482e-04        3.3713e-05        9.3519e-02        5.7205e-04  (   1.15%)
+sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
+combinational  3.7135e-03        4.1653e-02            0.6180        4.5984e-02  (  92.42%)
+--------------------------------------------------------------------------------------------------
+Total          7.3601e-03 mW     4.1687e-02 mW         0.7115 uW     4.9758e-02 mW
+1

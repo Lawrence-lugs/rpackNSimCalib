@@ -1,0 +1,31 @@
+ 
+****************************************
+Report : area
+Design : mac_engine
+Version: U-2022.12
+Date   : Wed Feb 28 13:35:30 2024
+****************************************
+
+Information: Updating design information... (UID-85)
+Library(s) Used:
+
+    GF22FDX_SC7P5T_116CPP_BASE_CSC20L_TT_0P80V_0P00V_0P00V_0P00V_25C (File: /cad/tools/libraries/dwc_logic_in_gf22fdx_sc7p5t_116cpp_base_csc20l/GF22FDX_SC7P5T_116CPP_BASE_CSC20L_FDK_RELV02R80/model/timing/db/GF22FDX_SC7P5T_116CPP_BASE_CSC20L_TT_0P80V_0P00V_0P00V_0P00V_25C.db)
+
+Number of ports:                          130
+Number of nets:                          1067
+Number of cells:                          801
+Number of combinational cells:            769
+Number of sequential cells:                32
+Number of macros/black boxes:               0
+Number of buf/inv:                        201
+Number of references:                      11
+
+Combinational area:                365.956796
+Buf/Inv area:                       39.115200
+Noncombinational area:              42.316799
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (No wire load specified)
+
+Total cell area:                   408.273595
+Total area:                 undefined
+1

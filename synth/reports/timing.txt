@@ -1,0 +1,45 @@
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : mac_engine
+Version: U-2022.12
+Date   : Wed Feb 28 13:35:30 2024
+****************************************
+
+Operating Conditions: TT_0P80V_0P00V_0P00V_0P00V_25C   Library: GF22FDX_SC7P5T_116CPP_BASE_CSC20L_TT_0P80V_0P00V_0P00V_0P00V_25C
+Wire Load Model Mode: top
+
+  Startpoint: res_o_reg[0][0]
+              (rising edge-triggered flip-flop clocked by clk)
+  Endpoint: res_o[0][0]
+            (output port clocked by clk)
+  Path Group: clk
+  Path Type: max
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock clk (rise edge)                                   0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  res_o_reg[0][0]/CLK (SC7P5T_DFFQX1_AS_CSC20L)           0.00       0.00 r
+  res_o_reg[0][0]/Q (SC7P5T_DFFQX1_AS_CSC20L)            43.68      43.68 r
+  U97/Z (SC7P5T_INVX1_CSC20L)                            14.31      57.99 f
+  U98/Z (SC7P5T_INVX6_CSC20L)                           358.43     416.43 r
+  res_o[0][0] (out)                                       0.00     416.43 r
+  data arrival time                                                416.43
+
+  clock clk (rise edge)                               20000.00   20000.00
+  clock network delay (ideal)                             0.00   20000.00
+  clock uncertainty                                   -1000.00   19000.00
+  output external delay                               -3000.00   16000.00
+  data required time                                             16000.00
+  --------------------------------------------------------------------------
+  data required time                                             16000.00
+  data arrival time                                               -416.43
+  --------------------------------------------------------------------------
+  slack (MET)                                                    15583.57
+
+
+1
