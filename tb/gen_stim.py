@@ -15,3 +15,5 @@ outs = acts + 1
 outs
 
 np.savetxt('out_ref.csv',outs,fmt='%i')
+
+#%%

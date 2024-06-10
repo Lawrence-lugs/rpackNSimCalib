@@ -1,5 +1,7 @@
 `timescale 1ns/1ps
 
+// vcs -full64 -sverilog -debug_pp ../tb/tb_peModel.sv ../rtl/*.sv
+
 module tb_peModel;
 
 parameter int unsigned CLK_PERIOD = 20;
@@ -11,17 +13,20 @@ parameter int peSize = nRowSaInPE*nSaRows;
 parameter int inputPrecision = 4;
 
 logic clk, nrst, valid;
-logic [nSaRows * nRowSaInPE - 1:0] data_in;
+logic [peSize - 1:0] data_in;
 logic [nSaRows + nStagesAdderTree - 1:0] data_out;
-logic [nSaRows * nRowSaInPE - 1:0][inputPrecision-1:0] acts_buffer;
+logic [peSize - 1:0][inputPrecision-1:0] acts_buffer;
+
+logic done;
 
 // Instantiate the peModel
 peModel dut (
     .clk(clk),
     .nrst(nrst),
     .valid(valid),
-    .data_in(data_in),
-    .data_out(data_out)
+    .pe_data_i(data_in),
+    .pe_data_o(data_out),
+    .done_o(done)
 );
 
 always
@@ -30,20 +35,19 @@ always
 int acts_file;
 
 task calculateComp(
-    input logic [nSaRows * nRowSaInPE - 1:0][inputPrecision-1:0] acts_buffer
+    input logic [peSize - 1:0][inputPrecision-1:0] acts_buffer
 );
 
+    #(CLK_PERIOD);
     valid = 1;
-    data_in = acts_buffer[0];
-    #(CLK_PERIOD);
-    data_in = acts_buffer[1];
-    #(CLK_PERIOD);
-    data_in = acts_buffer[2];
-    #(CLK_PERIOD);
-    data_in = acts_buffer[3];
-    #(CLK_PERIOD);
+    foreach(acts_buffer[i])
+        data_in[i] = acts_buffer[i];
+    #(CLK_PERIOD*3);
+    valid = 0;
 
 endtask
+
+int fout;
 
 initial begin
     $vcdplusfile("tb_peModel.vpd");
@@ -61,16 +65,14 @@ initial begin
     nrst = 0;
     #(CLK_PERIOD * 5)
     nrst = 1;
-
+    #(CLK_PERIOD)
 
     for(int l=0;l<50;l++) begin
 
         // Load acts buffer
         for(int i=0;i<peSize;i++) begin
-            $fscanf(acts_file,"%d ", acts_buffer[i]);
+            fout = $fscanf(acts_file,"%d ", acts_buffer[i]);
         end         
-
-        #(CLK_PERIOD);
         calculateComp(acts_buffer);
 
     end
