@@ -2,19 +2,23 @@
 
 // vcs -full64 -sverilog -debug_pp ../tb/tb_peModel.sv ../rtl/*.sv
 
-module tb_peModel;
+module tb_peModel();
 
 parameter int unsigned CLK_PERIOD = 20;
 parameter int nSaRows = 256;
+parameter int nSaCols = nSaRows;
 parameter int nRowSaInPE = 4;
 parameter int nStagesAdderTree = 4;
 parameter int saAdcBit = 4;
 parameter int peSize = nRowSaInPE*nSaRows;
-parameter int inputPrecision = 4;
+parameter int nAdderOutBits      = saAdcBit + nStagesAdderTree;
+parameter int inputPrecision     = 4;
+parameter int nColSaInPE         = nRowSaInPE;
+parameter int nSaInPE            = nColSaInPE * nRowSaInPE; // always square
 
 logic clk, nrst, valid;
-logic [peSize - 1:0] data_in;
-logic [nSaRows + nStagesAdderTree - 1:0] data_out;
+logic [peSize - 1:0][inputPrecision-1:0] data_in;
+logic [nSaCols-1:0][nColSaInPE-1:0][nAdderOutBits-1:0] data_out;
 logic [peSize - 1:0][inputPrecision-1:0] acts_buffer;
 
 logic done;
@@ -23,7 +27,7 @@ logic done;
 peModel dut (
     .clk(clk),
     .nrst(nrst),
-    .valid(valid),
+    .valid_i(valid),
     .pe_data_i(data_in),
     .pe_data_o(data_out),
     .done_o(done)
@@ -42,8 +46,9 @@ task calculateComp(
     valid = 1;
     foreach(acts_buffer[i])
         data_in[i] = acts_buffer[i];
-    #(CLK_PERIOD*3);
+    #(CLK_PERIOD);
     valid = 0;
+    #(CLK_PERIOD*2);
 
 endtask
 
@@ -55,7 +60,7 @@ initial begin
 
     `ifdef SYNTHESIS
     $sdf_annotate("../mapped/peModel_mapped.sdf", UUT);
-    `endif 
+    `endif
 
     $display("===============");
     acts_file = $fopen("../tb/acts.csv","r");

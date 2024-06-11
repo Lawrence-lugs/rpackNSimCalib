@@ -9,6 +9,7 @@ module saModel
 ( 
     input clk,
     input nrst,
+    input start_i,
     input logic [nSaRows-1:0] bit_i,
     // input logic [nSaCols-1:0] wr_data_i,
     // input logic [$clog2(nSaRows)-1:0] wr_sel_i,
@@ -41,7 +42,11 @@ always_ff @(posedge clk or negedge nrst) begin
     if (!nrst) begin
         ctr <= 0;
     end else begin
-        ctr <= ctr + 1;
+        if (!start_i & (ctr == 0)) begin
+            ctr <= 0;
+        end else begin
+            ctr <= ctr + 1;
+        end
     end
 end
 always_comb begin
